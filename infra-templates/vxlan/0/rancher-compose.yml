@@ -52,8 +52,8 @@ flat:
       host_ports: true
       subnets:
       - network_address: $SUBNET
-        startAddress: ${START_ADDRESS}
-        endAddress: ${END_ADDRESS}
+        start_address: ${START_ADDRESS}
+        end_address: ${END_ADDRESS}
       dns:
       - 169.254.169.250
       dns_search:
