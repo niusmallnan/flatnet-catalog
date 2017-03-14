@@ -51,7 +51,7 @@ flat:
       name: flat
       host_ports: true
       subnets:
-      - networkAddress: $SUBNET
+      - network_address: $SUBNET
         startAddress: ${START_ADDRESS}
         endAddress: ${END_ADDRESS}
       dns:
