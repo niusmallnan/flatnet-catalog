@@ -1,0 +1,80 @@
+.catalog:
+  version: "v0.0.3"
+  questions:
+    - variable: "FLAT_BRIDGE"
+      label: "FLAT Bridge"
+      description: "Name of Docker Bridge. Default is `mpbr0`"
+      type: "string"
+      default: "mpbr0"
+      required: true
+    - variable: MTU
+      label: "MTU for the network"
+      description: "Adjust the MTU for the network, according to your needs. Ex: GCE(1460), AWS(1500), etc"
+      required: true
+      default: 1500
+      type: int
+    - variable: "SUBNET"
+      label: "Subnet"
+      description: "The subnet to use for the managed network."
+      type: "string"
+      default: '172.22.101.192/26'
+      required: true
+    - variable: "START_ADDRESS"
+      label: "Start IP Address"
+      description: "The subnet to use for the managed network."
+      type: "string"
+      default: '172.22.101.200'
+      required: true
+    - variable: "END_ADDRESS"
+      label: "END IP Address"
+      description: "The subnet to use for the managed network."
+      type: "string"
+      default: '172.22.101.230'
+      required: true
+    - variable: "GATEWAY"
+      label: "Gateway"
+      description: "Container default gateway."
+      type: "string"
+      default: '172.22.101.1'
+      required: true
+    - variable: "RANCHER_DEBUG"
+      label: "Enable Debug Logs"
+      description: "This will enable very verbose debug logs."
+      type: "boolean"
+      default: "true"
+      required: true
+
+flat:
+  network_driver:
+    name: Rancher Flat Networking
+    default_network:
+      name: flat
+      host_ports: true
+      subnets:
+      - networkAddress: $SUBNET
+        startAddress: ${START_ADDRESS}
+        endAddress: ${END_ADDRESS}
+      dns:
+      - 169.254.169.250
+      dns_search:
+      - rancher.internal
+    cni_config:
+      '10-rancher-flat.conf':
+        name: rancher-cni-network
+        type: rancher-bridge
+        bridge: $FLAT_BRIDGE
+        bridgeSubnet: $SUBNET
+        logToFile: /var/log/rancher-cni.log
+        isDebugLevel: ${RANCHER_DEBUG}
+        hairpinMode: true
+        hostNat: true
+        hairpinMode: true
+        mtu: ${MTU}
+        linkMTUOverhead: 0
+        isDefaultGateway: true
+        ipam:
+          type: rancher-cni-ipam
+          logToFile: /var/log/rancher-cni.log
+          isDebugLevel: ${RANCHER_DEBUG}
+          gateway: ${GATEWAY}
+          isFlat: true
