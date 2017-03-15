@@ -3,7 +3,7 @@
 set -ex
 
 FLAT_IF=${FLAT_IF:-eth0}
-BRIDGE_NAME=${BRIDGE_NAME:-mpbr0}
+BRIDGE_NAME=${FLAT_BRIDGE:-mpbr0}
 
 TEST_BRIDGE=$(ip addr show $BRIDGE_NAME | grep 'inet\b' | awk '{print $2}')
 if [ ! -z $TEST_BRIDGE ]; then
