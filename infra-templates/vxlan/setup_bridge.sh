@@ -19,9 +19,9 @@ GW_IP=$(ip route show | grep default | awk '{print $3}')
 
 ip link add ${BRIDGE_NAME} type bridge
 ip link set ${BRIDGE_NAME} address ${BRIDGE_MAC}
-ip addr del ${eth0_IP} dev eth0
+ip addr del ${FLAT_IF_IP} dev ${FLAT_IF}
 ip addr add ${BRIDGE_IP} dev ${BRIDGE_NAME}
 ip link set dev ${BRIDGE_NAME} up
-ip link set dev eth0 master ${BRIDGE_NAME}
+ip link set dev ${FLAT_IF} master ${BRIDGE_NAME}
 
 ip route add default via ${GW_IP}
