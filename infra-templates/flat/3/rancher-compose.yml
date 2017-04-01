@@ -89,4 +89,4 @@ cni-driver:
           logToFile: /var/log/rancher-cni.log
           isDebugLevel: ${RANCHER_DEBUG}
           gateway: ${GATEWAY}
-          subnetPrefixSize: ${SUBNET_PREFIX_SIZE}
+          subnetPrefixSize: /${SUBNET_PREFIX_SIZE}
