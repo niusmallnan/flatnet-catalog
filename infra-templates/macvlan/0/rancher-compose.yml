@@ -84,11 +84,10 @@ cni-driver:
         logToFile: /var/log/rancher-cni.log
         isDebugLevel: ${RANCHER_DEBUG}
         mtu: ${MTU}
+        isDefaultGateway: true
         ipam:
           type: rancher-cni-ipam
           logToFile: /var/log/rancher-cni.log
           isDebugLevel: ${RANCHER_DEBUG}
           gateway: ${GATEWAY}
           subnetPrefixSize: /${SUBNET_PREFIX_SIZE}
-          routes:
-          - dst: ${SUBNET}
