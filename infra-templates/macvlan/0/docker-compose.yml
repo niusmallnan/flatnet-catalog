@@ -10,7 +10,7 @@ services:
       io.rancher.network.cni.binary: 'rancher-cni-macvlan'
       io.rancher.container.dns: 'true'
       io.rancher.scheduler.global: 'true'
-      io.rancher.network.macsync: 'true'
+      #io.rancher.network.macsync: 'true'
     logging:
       driver: json-file
       options:
