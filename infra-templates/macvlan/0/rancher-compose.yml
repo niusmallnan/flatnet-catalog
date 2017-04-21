@@ -1,5 +1,5 @@
 .catalog:
-  version: "v0.0.4"
+  version: "v0.0.1"
   questions:
     - variable: "MASTER"
       label: "Master of Macvlan"
