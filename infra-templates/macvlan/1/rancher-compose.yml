@@ -98,5 +98,5 @@ cni-driver:
           gateway: ${GATEWAY}
           subnetPrefixSize: /${SUBNET_PREFIX_SIZE}
           routes:
-          - dst: 169.254.169.250
+          - dst: 169.254.169.250/32
             gw: ${METADATA_GATEWAY}
