@@ -28,31 +28,25 @@
       label: "Subnet"
       description: "The subnet to use for the managed network."
       type: "string"
-      default: '172.22.101.0/24'
+      default: '192.168.22.0/24'
       required: true
     - variable: "START_ADDRESS"
       label: "Start IP Address"
       description: "The subnet to use for the managed network."
       type: "string"
-      default: '172.22.101.110'
+      default: '192.168.22.50'
       required: true
     - variable: "END_ADDRESS"
       label: "END IP Address"
       description: "The subnet to use for the managed network."
       type: "string"
-      default: '172.22.101.240'
+      default: '192.168.22.240'
       required: true
     - variable: "GATEWAY"
       label: "Gateway"
       description: "Container default gateway."
       type: "string"
-      default: '172.22.101.1'
-      required: true
-    - variable: "METADATA_GATEWAY"
-      label: "Metadata Gateway"
-      description: "Container metadata gateway."
-      type: "string"
-      default: '172.22.101.254'
+      default: '192.168.22.1'
       required: true
     - variable: "RANCHER_DEBUG"
       label: "Enable Debug Logs"
@@ -97,6 +91,3 @@ cni-driver:
           isDebugLevel: ${RANCHER_DEBUG}
           gateway: ${GATEWAY}
           subnetPrefixSize: /${SUBNET_PREFIX_SIZE}
-          routes:
-          - dst: 169.254.169.250/32
-            gw: ${METADATA_GATEWAY}
