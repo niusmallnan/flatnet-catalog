@@ -10,6 +10,8 @@ services:
       MASTER: ${MASTER}
       MD_GW_IP: ${METADATA_GATEWAY}
       MTU: ${MTU}
+    volumes:
+    - /lib/modules:/lib/modules:ro
     labels:
       io.rancher.network.cni.binary: 'rancher-cni-macvlan'
       io.rancher.container.dns: 'true'
