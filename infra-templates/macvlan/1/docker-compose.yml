@@ -8,7 +8,7 @@ services:
     pid: host
     environment:
       MASTER: ${MASTER}
-      MD_GW_IP: ${METADATA_GATEWAY}
+      MD_GW_IP: ${METADATA_GATEWAY}/${SUBNET_PREFIX_SIZE}
       MTU: ${MTU}
     volumes:
     - /lib/modules:/lib/modules:ro
