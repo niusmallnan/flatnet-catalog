@@ -1,0 +1,22 @@
+version: '2'
+services:
+  cni-driver:
+    privileged: true
+    image: registry.cn-hangzhou.aliyuncs.com/rancher-cn/rancher-macvlan:v0.0.2
+    command: sh -c "setup_md_gw.sh && touch /var/log/rancher-cni.log && exec tail ---disable-inotify -F /var/log/rancher-cni.log"
+    network_mode: host
+    pid: host
+    environment:
+      MASTER: ${MASTER}
+      MD_GW_IP: ${METADATA_GATEWAY}
+      MTU: ${MTU}
+    labels:
+      io.rancher.network.cni.binary: 'rancher-cni-macvlan'
+      io.rancher.container.dns: 'true'
+      io.rancher.scheduler.global: 'true'
+      #io.rancher.network.macsync: 'true'
+    logging:
+      driver: json-file
+      options:
+        max-size: 25m
+        max-file: '2'
