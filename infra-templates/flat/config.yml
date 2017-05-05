@@ -1,8 +1,6 @@
-name: Rancher Flat Networking
-description: |
-  Rancher Networking plugin using Flat Networking.
-version: v0.0.5
+name: Rancher Flat
+version: v0.1.0
 category: Networking
 labels:
-  io.rancher.certified: rancher
+  io.rancher.certified: Experimental
   io.rancher.orchestration.supported: 'cattle'

@@ -1,0 +1,21 @@
+version: '2'
+services:
+  cni-driver:
+    privileged: true
+    image: niusmallnan/rancher-flat:v0.1.0
+    environment:
+      FLAT_IF: ${FLAT_IF}
+      FLAT_BRIDGE: ${FLAT_BRIDGE}
+      MTU: ${MTU}
+    command: sh -c "setup_flat_bridge.sh && touch /var/log/rancher-cni.log && exec tail ---disable-inotify -F /var/log/rancher-cni.log"
+    network_mode: host
+    pid: host
+    labels:
+      io.rancher.network.cni.binary: 'rancher-flat'
+      io.rancher.container.dns: 'true'
+      io.rancher.scheduler.global: 'true'
+    logging:
+      driver: json-file
+      options:
+        max-size: 25m
+        max-file: '2'
