@@ -26,4 +26,6 @@ ip link set dev ${BRIDGE_NAME} up
 ip link set dev ${FLAT_IF} master ${BRIDGE_NAME}
 ip link set dev ${BRIDGE_NAME} mtu ${MTU}
 
-ip route add default via ${GW_IP} || true
+if [ -z $(ip route show | grep default | awk '{print $3}')  ]; then
+    ip route add default via ${GW_IP}
+fi

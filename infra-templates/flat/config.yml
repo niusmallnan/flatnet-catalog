@@ -1,5 +1,7 @@
-name: Rancher Flat
-version: v0.1.0
+name: Rancher Layer-2 Flat
+version: v0.1.1
+description: |
+  Rancher Networking plugin using Layer-2 Flat.
 category: Networking
 labels:
   io.rancher.certified: Experimental
