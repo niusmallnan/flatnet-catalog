@@ -1,5 +1,5 @@
 name: Rancher Layer-2 Flat
-version: v0.1.1
+version: v0.1.2
 description: |
   Rancher Networking plugin using Layer-2 Flat.
 category: Networking
