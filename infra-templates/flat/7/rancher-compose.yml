@@ -60,7 +60,7 @@ cni-driver:
   network_driver:
     name: Rancher Flat Networking
     default_network:
-      name: flat
+      name: l2-flat
       host_ports: true
       subnets:
       - network_address: $SUBNET

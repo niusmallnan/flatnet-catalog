@@ -15,6 +15,9 @@ services:
       io.rancher.container.dns: 'true'
       io.rancher.scheduler.global: 'true'
       io.rancher.network.mode: 'bridged'
+      io.rancher.network.name: 'l2-flat'
+      io.rancher.network.macsync: 'true'
+      io.rancher.network.arpsync: 'true'
     logging:
       driver: json-file
       options:
