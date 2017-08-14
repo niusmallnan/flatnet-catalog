@@ -14,8 +14,6 @@ services:
       io.rancher.network.cni.binary: 'rancher-bridge'
       io.rancher.container.dns: 'true'
       io.rancher.scheduler.global: 'true'
-      io.rancher.network.name: 'l2-flat'
-      io.rancher.network.macsync: 'true'
     logging:
       driver: json-file
       options:
