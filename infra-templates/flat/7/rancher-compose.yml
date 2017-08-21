@@ -1,5 +1,8 @@
 .catalog:
+  name: "l2-flat"
   version: "v0.1.2"
+  minimum_rancher_version: v1.6.0-alpha1
+  maximum_rancher_version: v1.6.2
   questions:
     - variable: "FLAT_BRIDGE"
       label: "FLAT Bridge"
@@ -60,7 +63,7 @@ cni-driver:
   network_driver:
     name: Rancher Flat Networking
     default_network:
-      name: flat
+      name: l2-flat
       host_ports: true
       subnets:
       - network_address: $SUBNET

@@ -1,4 +1,5 @@
 .catalog:
+  name: "l2-flat"
   version: "v0.1.1"
   questions:
     - variable: "FLAT_BRIDGE"
@@ -83,7 +84,6 @@ cni-driver:
         hostNat: false
         mtu: ${MTU}
         isL2Flat: true
-        forceTagTraffic: true
         ipam:
           type: rancher-cni-ipam
           logToFile: /var/log/rancher-cni.log
