@@ -1,5 +1,18 @@
 version: '2'
 services:
+  l2flat-helper:
+    privileged: true
+    image: niusmallnan/l2flat-helper:dev
+    environment:
+      RANCHER_DEBUG: '${RANCHER_DEBUG}'
+    network_mode: host
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    - /var/run:/var/run
+    - /run:/run
+    pid: host
+    labels:
+      io.rancher.scheduler.global: 'true'
   cni-driver:
     privileged: true
     image: niusmallnan/rancher-flat:v0.1.4
