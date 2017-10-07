@@ -13,18 +13,29 @@ services:
     pid: host
     labels:
       io.rancher.scheduler.global: 'true'
+    logging:
+      driver: json-file
+      options:
+        max-size: 25m
+        max-file: '2'
   cni-driver:
     privileged: true
-    image: niusmallnan/rancher-flat:v0.1.4
+    image: niusmallnan/rancher-flat:v0.1.5
     {{- if eq .Values.AUTO_BIND_BRIDGE "true" }}
     environment:
+      RANCHER_DEBUG: '${RANCHER_DEBUG}'
       FLAT_IF: ${FLAT_IF}
       FLAT_BRIDGE: ${FLAT_BRIDGE}
       MTU: ${MTU}
     command: sh -c "setup_flat_bridge.sh && touch /var/log/rancher-cni.log && exec tail ---disable-inotify -F /var/log/rancher-cni.log"
     {{- else }}
+    environment:
+      RANCHER_DEBUG: '${RANCHER_DEBUG}'
     command: sh -c "touch /var/log/rancher-cni.log && exec tail ---disable-inotify -F /var/log/rancher-cni.log"
     {{- end }}
+    volumes:
+    # - /var/run/docker.sock:/var/run/docker.sock
+    - rancher-cni-driver:/opt/cni-driver
     network_mode: host
     pid: host
     labels:
@@ -42,7 +53,7 @@ services:
         name: l2-flat
         host_ports: true
         subnets:
-        - network_address: $SUBNET
+        - network_address: ${SUBNET}
           start_address: ${START_ADDRESS}
           end_address: ${END_ADDRESS}
         dns:

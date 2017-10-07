@@ -1,6 +1,6 @@
 .catalog:
   name: "l2-flat"
-  version: "v0.1.4"
+  version: "v0.1.5"
   minimum_rancher_version: v1.6.3-rc1
   questions:
     - variable: "FLAT_BRIDGE"

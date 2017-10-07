@@ -2,7 +2,15 @@
 
 set -ex
 
-FLAT_IF=${FLAT_IF:-eth0}
+LABEL="io.rancher.network.l2flat.interface"
+FLAT_IF_FROM_LABEL=$(curl -s 169.254.169.250/2016-07-29/self/host/labels/${LABEL})
+if [ "$(echo $FLAT_IF_FROM_LABEL | grep "Not found")" != ""  ]; then
+    FLAT_IF=${FLAT_IF:-eth0}
+else
+    echo "Used the host label..."
+    FLAT_IF=$FLAT_IF_FROM_LABEL
+fi
+
 BRIDGE_NAME=${FLAT_BRIDGE:-flatbr0}
 MTU=${MTU:-1500}
 
