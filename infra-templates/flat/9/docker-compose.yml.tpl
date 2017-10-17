@@ -65,8 +65,8 @@ services:
           name: rancher-cni-network
           type: rancher-bridge
           bridge: ${FLAT_BRIDGE}
-          bridgeSubnet: ${SUBNET}
-          bridgeIP: '__host_interface__: ${FLAT_BRIDGE}'
+          # bridgeSubnet: ${SUBNET}
+          # bridgeIP: '__host_interface__: ${FLAT_BRIDGE}'
           logToFile: /var/log/rancher-cni.log
           isDebugLevel: ${RANCHER_DEBUG}
           hairpinMode: {{ .Values.RANCHER_HAIRPIN_MODE }}
