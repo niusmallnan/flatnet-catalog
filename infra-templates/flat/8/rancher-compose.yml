@@ -57,18 +57,6 @@
       type: "boolean"
       default: "true"
       required: true
-    - variable: "RANCHER_HAIRPIN_MODE"
-      label: "Enable Hairpin mode"
-      description: "If this is enabled, Promiscuous mode needs to be disabled."
-      type: "boolean"
-      default: "false"
-      required: true
-    - variable: "RANCHER_PROMISCUOUS_MODE"
-      label: "Enable Promiscuous mode on the bridge"
-      description: "If this is enabled, Hairpin mode needs to be disabled."
-      type: "boolean"
-      default: "true"
-      required: true
     - variable: "HOST_NAT"
       label: "Enable Host NAT"
       description: "Flag to enable/disable NAT for subnet"

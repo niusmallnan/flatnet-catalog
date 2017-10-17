@@ -2,7 +2,7 @@ version: '2'
 services:
   cni-driver:
     privileged: true
-    image: niusmallnan/rancher-flat:v0.1.1
+    image: niusmallnan/rancher-flat:v0.1.3
     environment:
       FLAT_IF: ${FLAT_IF}
       FLAT_BRIDGE: ${FLAT_BRIDGE}
@@ -25,7 +25,7 @@ services:
         name: l2-flat
         host_ports: true
         subnets:
-        - network_address: $SUBNET
+        - network_address: ${SUBNET}
           start_address: ${START_ADDRESS}
           end_address: ${END_ADDRESS}
         dns:
@@ -37,11 +37,8 @@ services:
           name: rancher-cni-network
           type: rancher-bridge
           bridge: ${FLAT_BRIDGE}
-          bridgeSubnet: ${SUBNET}
           logToFile: /var/log/rancher-cni.log
           isDebugLevel: ${RANCHER_DEBUG}
-          hairpinMode: {{  .Values.RANCHER_HAIRPIN_MODE  }}
-          promiscMode: {{ .Values.RANCHER_PROMISCUOUS_MODE  }}
           hostNat: {{ .Values.HOST_NAT  }}
           mtu: ${MTU}
           isL2Flat: true
