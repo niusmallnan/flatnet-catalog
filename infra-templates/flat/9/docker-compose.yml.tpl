@@ -27,7 +27,8 @@ services:
       FLAT_IF: ${FLAT_IF}
       FLAT_BRIDGE: ${FLAT_BRIDGE}
       MTU: ${MTU}
-    command: sh -c "setup_flat_bridge.sh && touch /var/log/rancher-cni.log && exec tail ---disable-inotify -F /var/log/rancher-cni.log"
+    command: sh -c "touch /var/log/rancher-cni.log && exec tail ---disable-inotify -F /var/log/rancher-cni.log"
+    entrypoint: setup_flat_bridge.sh
     {{- else }}
     environment:
       RANCHER_DEBUG: '${RANCHER_DEBUG}'
