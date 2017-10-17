@@ -26,7 +26,7 @@ BRIDGE_IP=${FLAT_IF_IP}
 BRIDGE_MAC="00:aa:bb:${BASE_MAC}"
 GW_IP=$(ip route show | grep default | awk '{print $3}')
 
-ip link add ${BRIDGE_NAME} type bridge
+ip link add ${BRIDGE_NAME} type bridge || true
 ip link set ${BRIDGE_NAME} address ${BRIDGE_MAC}
 ip addr del ${FLAT_IF_IP} dev ${FLAT_IF}
 ip addr add ${BRIDGE_IP} brd + dev ${BRIDGE_NAME}

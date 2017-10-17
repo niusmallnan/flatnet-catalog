@@ -27,8 +27,7 @@ services:
       FLAT_IF: ${FLAT_IF}
       FLAT_BRIDGE: ${FLAT_BRIDGE}
       MTU: ${MTU}
-    command: sh -c "touch /var/log/rancher-cni.log && exec tail ---disable-inotify -F /var/log/rancher-cni.log"
-    entrypoint: setup_flat_bridge.sh
+    command: sh -c "setup_flat_bridge.sh && touch /var/log/rancher-cni.log && exec tail ---disable-inotify -F /var/log/rancher-cni.log"
     {{- else }}
     environment:
       RANCHER_DEBUG: '${RANCHER_DEBUG}'
@@ -66,12 +65,10 @@ services:
           name: rancher-cni-network
           type: rancher-bridge
           bridge: ${FLAT_BRIDGE}
-          # bridgeSubnet: ${SUBNET}
-          # bridgeIP: '__host_interface__: ${FLAT_BRIDGE}'
+          bridgeSubnet: ${SUBNET}
+          bridgeIP: '__host_interface__: ${FLAT_BRIDGE}'
           logToFile: /var/log/rancher-cni.log
           isDebugLevel: ${RANCHER_DEBUG}
-          hairpinMode: {{ .Values.RANCHER_HAIRPIN_MODE }}
-          promiscMode: {{ .Values.RANCHER_PROMISCUOUS_MODE }}
           hostNat: {{ .Values.HOST_NAT }}
           mtu: ${MTU}
           ipam:
