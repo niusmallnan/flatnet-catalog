@@ -37,6 +37,7 @@ services:
           name: rancher-cni-network
           type: rancher-bridge
           bridge: ${FLAT_BRIDGE}
+          bridgeSubnet: ${SUBNET}
           logToFile: /var/log/rancher-cni.log
           isDebugLevel: ${RANCHER_DEBUG}
           hostNat: {{ .Values.HOST_NAT  }}
