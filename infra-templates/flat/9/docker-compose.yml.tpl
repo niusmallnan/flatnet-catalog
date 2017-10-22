@@ -3,11 +3,18 @@ services:
   cni-driver:
     privileged: true
     image: niusmallnan/rancher-flat:v0.2.0
+    {{- if eq .Values.AUTO_SETUP_FLAT_BRIDGE "true" }}
     environment:
+      RANCHER_DEBUG: ${RANCHER_DEBUG}
       FLAT_IF: ${FLAT_IF}
       FLAT_BRIDGE: ${FLAT_BRIDGE}
       MTU: ${MTU}
     command: sh -c "start-flat.sh && start-cni-driver.sh"
+    {{- else }}
+    environment:
+      RANCHER_DEBUG: '${RANCHER_DEBUG}
+    command: start-cni-driver.sh
+    {{- end }}
     network_mode: host
     pid: host
     labels:

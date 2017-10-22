@@ -45,6 +45,12 @@
       type: "string"
       default: '172.22.101.1'
       required: true
+    - variable: "AUTO_SETUP_FLAT_BRIDGE"
+      label: "Auto Setup Flat Bridge"
+      description: "Flag to enable/disable setup flat bridge automatically"
+      type: "boolean"
+      default: "true"
+      required: true
     - variable: "RANCHER_DEBUG"
       label: "Enable Debug Logs"
       description: "This will enable very verbose debug logs."
