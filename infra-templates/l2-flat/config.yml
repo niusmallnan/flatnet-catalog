@@ -1,7 +1,7 @@
-name: Rancher Macvlan Networking
+name: Rancher Layer2 Flat
+version: v0.1.0
 description: |
-  Rancher Networking plugin using Macvlan Networking.
-version: v0.0.2
+  Rancher Networking plugin using Layer2 Flat.
 category: Networking
 labels:
   io.rancher.certified: rancher

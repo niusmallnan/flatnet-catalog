@@ -1,19 +1,34 @@
 version: '2'
+
+{{- $netImage:="rancher/net:v0.13.4" }}
+
 services:
   cni-driver:
     privileged: true
-    image: niusmallnan/rancher-flat:v0.1.3
+    image: {{$netImage}}
+    {{- if eq .Values.AUTO_SETUP_FLAT_BRIDGE "true" }}
     environment:
+      RANCHER_DEBUG: ${RANCHER_DEBUG}
       FLAT_IF: ${FLAT_IF}
       FLAT_BRIDGE: ${FLAT_BRIDGE}
       MTU: ${MTU}
-    command: sh -c "setup_flat_bridge.sh && touch /var/log/rancher-cni.log && exec tail ---disable-inotify -F /var/log/rancher-cni.log"
+      RANCHER_METADATA_ADDRESS: ${RANCHER_METADATA_ADDRESS}
+    command: sh -c "start-flat.sh && start-cni-driver.sh"
+    {{- else }}
+    environment:
+      RANCHER_DEBUG: ${RANCHER_DEBUG}
+      RANCHER_METADATA_ADDRESS: ${RANCHER_METADATA_ADDRESS}
+    command: start-cni-driver.sh
+    {{- end }}
     network_mode: host
     pid: host
     labels:
       io.rancher.network.cni.binary: 'rancher-bridge'
       io.rancher.container.dns: 'true'
       io.rancher.scheduler.global: 'true'
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    - rancher-cni-driver:/opt/cni-driver
     logging:
       driver: json-file
       options:
@@ -34,20 +49,20 @@ services:
         - rancher.internal
       cni_config:
         '10-rancher-flat.conf':
-          name: rancher-cni-network
+          name: rancher-flat-network
           type: rancher-bridge
           bridge: ${FLAT_BRIDGE}
           bridgeSubnet: ${SUBNET}
           logToFile: /var/log/rancher-cni.log
           isDebugLevel: ${RANCHER_DEBUG}
-          hostNat: {{ .Values.HOST_NAT  }}
+          hostNat: false
           mtu: ${MTU}
-          isL2Flat: true
+          skipBridgeConfigureIP: true
+          skipFastPath: true
           ipam:
-            type: rancher-cni-ipam
+            type: rancher-flat-ipam
             logToFile: /var/log/rancher-cni.log
             isDebugLevel: ${RANCHER_DEBUG}
-            subnetPrefixSize: /${SUBNET_PREFIX_SIZE}
             routes:
             - dst: 0.0.0.0/0
               gw: ${GATEWAY}
