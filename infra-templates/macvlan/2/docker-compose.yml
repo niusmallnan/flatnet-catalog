@@ -1,0 +1,55 @@
+version: '2'
+services:
+  cni-driver:
+    privileged: true
+    image: niusmallnan/rancher-macvlan:v0.1.0
+    command: sh -c "setup-md-gw.sh && start-cni-driver.sh"
+    network_mode: host
+    pid: host
+    environment:
+      MASTER: ${MASTER}
+      MD_GW_IP: ${GATEWAY}/${SUBNET_PREFIX_SIZE}
+      MTU: ${MTU}
+      SUBNET: ${SUBNET}
+    volumes:
+    - /lib/modules:/lib/modules:ro
+    - /var/run/docker.sock:/var/run/docker.sock:ro
+    - rancher-cni-driver:/opt/cni-driver
+    labels:
+      io.rancher.network.cni.binary: 'rancher-cni-macvlan'
+      io.rancher.container.dns: 'true'
+      io.rancher.scheduler.global: 'true'
+    logging:
+      driver: json-file
+      options:
+        max-size: 25m
+        max-file: '2'
+    network_driver:
+      name: Rancher Macvlan Networking
+      default_network:
+        name: macvlan
+        host_ports: true
+        subnets:
+        - network_address: ${SUBNET}
+          start_address: ${START_ADDRESS}
+          end_address: ${END_ADDRESS}
+        dns:
+        - 169.254.169.250
+        dns_search:
+        - rancher.internal
+      cni_config:
+        '10-rancher-macvlan.conf':
+          name: rancher-cni-network
+          type: rancher-cni-macvlan
+          master: ${MASTER}
+          mode: ${MODE}
+          logToFile: /var/log/rancher-cni.log
+          isDebugLevel: ${RANCHER_DEBUG}
+          mtu: ${MTU}
+          isDefaultGateway: true
+          ipam:
+            type: rancher-cni-ipam
+            logToFile: /var/log/rancher-cni.log
+            isDebugLevel: ${RANCHER_DEBUG}
+            gateway: ${GATEWAY}
+            subnetPrefixSize: /${SUBNET_PREFIX_SIZE}
